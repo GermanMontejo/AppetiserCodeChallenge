@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AppetiserCodeChallenge</string>
+    <string name="title_item_detail">Item Detail</string>
+    <string name="track_name">Track Name:</string>
+    <string name="price">Price:</string>
+    <string name="genre">Genre:</string>
+    <string name="description">Description:</string>
+</resources>

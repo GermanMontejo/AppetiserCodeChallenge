@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+            android:id="@+id/imgArtwork"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="fitXY"
+            android:layout_marginTop="10dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"/>
+
+    <TextView
+            android:id="@+id/txtTrackName"
+            app:layout_constraintStart_toEndOf="@id/imgArtwork"
+            app:layout_constraintTop_toTopOf="@id/imgArtwork"
+            android:text="@string/track_name"
+            android:layout_marginStart="10dp"
+            android:ems="14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/txtTrackPrice"
+            app:layout_constraintTop_toBottomOf="@id/txtTrackName"
+            app:layout_constraintStart_toStartOf="@id/txtTrackName"
+            android:text="@string/price"
+            android:ems="14"
+            android:layout_marginTop="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/txtGenre"
+            app:layout_constraintTop_toBottomOf="@id/txtTrackPrice"
+            app:layout_constraintStart_toStartOf="@id/txtTrackName"
+            android:text="@string/genre"
+            android:ems="14"
+            android:layout_marginTop="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
