@@ -1,10 +1,9 @@
 package com.germanmontejo.appetisercodechallenge.view.adapter
 
-import android.view.View
-import androidx.recyclerview.widget.RecyclerView
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.germanmontejo.appetisercodechallenge.R
 import com.germanmontejo.appetisercodechallenge.model.Result

@@ -8,17 +8,18 @@ class Utils {
     companion object {
         var ITUNES_LIST_ACTIVITY = ItunesListActivity::class.java.name
         var ITUNES_DETAIL_ACTIVITY = ItunesDetailActivity::class.java.name
-        private const val ITUNES_PREF = "itunes_pref"
+        const val ITUNES_PREF = "itunes_pref"
         private const val ID = "track_id"
-        private const val LAST_ACTIVITY = "last_activity"
+        const val LAST_ACTIVITY = "last_activity"
+        const val LAST_VISITED = "last_visited"
 
-        fun storeLastActivity(context: Context, activity: String) {
+        fun storeStringPref(context: Context, key: String, value: String) {
             val pref = context.getSharedPreferences(ITUNES_PREF, Context.MODE_PRIVATE).edit()
-            pref.putString(LAST_ACTIVITY, activity).apply()
+            pref.putString(key, value).apply()
         }
 
-        fun getLastActivity(context: Context): String {
-            return context.getSharedPreferences(ITUNES_PREF, Context.MODE_PRIVATE).getString(LAST_ACTIVITY, "") ?: ""
+        fun getStringPref(context: Context, key: String): String {
+            return context.getSharedPreferences(ITUNES_PREF, Context.MODE_PRIVATE).getString(key, "") ?: ""
         }
 
         fun storeLastTrackViewed(context: Context, id: Int) {
@@ -28,6 +29,5 @@ class Utils {
         fun getLastTrackViewed(context: Context): Int {
             return context.getSharedPreferences(ITUNES_PREF, Context.MODE_PRIVATE).getInt(ID, 0)
         }
-
     }
 }

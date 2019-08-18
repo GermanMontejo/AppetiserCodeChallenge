@@ -1,12 +1,10 @@
 package com.germanmontejo.appetisercodechallenge.view.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import kotlinx.android.synthetic.main.item_detail.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,13 +13,7 @@ import com.germanmontejo.appetisercodechallenge.R
 import com.germanmontejo.appetisercodechallenge.utils.Utils
 import com.germanmontejo.appetisercodechallenge.viewmodel.ItunesViewModel
 import kotlinx.android.synthetic.main.activity_item_detail.*
-
-/**
- * A fragment representing a single Item detail screen.
- * This fragment is either contained in a [ItunesListActivity]
- * in two-pane mode (on tablets) or a [ItunesDetailActivity]
- * on handsets.
- */
+import kotlinx.android.synthetic.main.item_detail.view.*
 
 class ItunesDetailFragment : Fragment() {
 

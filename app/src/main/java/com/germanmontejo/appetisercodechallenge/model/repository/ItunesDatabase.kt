@@ -6,9 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [ItunesTrack::class], version = 1)
-public abstract class ItunesDatabase : RoomDatabase() {
+abstract class ItunesDatabase : RoomDatabase() {
     abstract fun itunesDao(): ItunesDao
-
 
     companion object {
         @Volatile

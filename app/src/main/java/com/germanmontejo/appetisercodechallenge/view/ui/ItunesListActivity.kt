@@ -1,30 +1,25 @@
 package com.germanmontejo.appetisercodechallenge.view.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.germanmontejo.appetisercodechallenge.R
+import com.germanmontejo.appetisercodechallenge.model.ItunesResponse
+import com.germanmontejo.appetisercodechallenge.utils.Utils
+import com.germanmontejo.appetisercodechallenge.view.adapter.ItunesTrackAdapter
 import com.germanmontejo.appetisercodechallenge.viewmodel.ItunesViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_item_list.*
 import kotlinx.android.synthetic.main.item_list.*
-import android.content.Intent
-import android.util.Log
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.germanmontejo.appetisercodechallenge.model.ItunesResponse
-import com.germanmontejo.appetisercodechallenge.model.Result
-import com.germanmontejo.appetisercodechallenge.utils.Utils
-import com.germanmontejo.appetisercodechallenge.view.adapter.ItunesTrackAdapter
-import com.google.gson.Gson
 import org.jetbrains.anko.doAsync
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ItunesListActivity : AppCompatActivity() {
 
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
     private var twoPane: Boolean = false
     private lateinit var itunesViewModel: ItunesViewModel
     private lateinit var itunesAdapter: ItunesTrackAdapter
@@ -47,7 +42,7 @@ class ItunesListActivity : AppCompatActivity() {
 
         // If the user's last visited screen was the ItunesDetailActivity, the code below
         // would ensure that when the user opens the app again, it would load the ItunesDetailActivity.
-        if (Utils.ITUNES_DETAIL_ACTIVITY.equals(Utils.getLastActivity(this))) {
+        if (Utils.ITUNES_DETAIL_ACTIVITY.equals(Utils.getStringPref(this, Utils.LAST_ACTIVITY))) {
             val intent = Intent(this, ItunesDetailActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
@@ -56,7 +51,20 @@ class ItunesListActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        Utils.storeLastActivity(this, Utils.ITUNES_LIST_ACTIVITY)
+        Utils.storeStringPref(this, Utils.LAST_ACTIVITY, Utils.ITUNES_LIST_ACTIVITY)
+        txtPreviousVisited.text = "${getString(R.string.last_visited)} ${Utils.getStringPref(this, Utils.LAST_VISITED)}"
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Utils.storeStringPref(this, Utils.LAST_VISITED, getFormattedDateTime())
+    }
+
+    // This function returns a datetime str to be displayed
+    // as a "last visited" info on the itunes track list recyclerview.
+    private fun getFormattedDateTime(): String {
+        val dateTime = Calendar.getInstance().time
+        return SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault()).format(dateTime)
     }
 
     // this method is responsible for fetching the itunes tracks from the API

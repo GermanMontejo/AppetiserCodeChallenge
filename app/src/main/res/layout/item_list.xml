@@ -1,13 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                                           xmlns:app="http://schemas.android.com/apk/res-auto"
-                                           xmlns:tools="http://schemas.android.com/tools"
-                                           android:id="@+id/rcvItunesList"
-                                           android:name="com.germanmontejo.appetisercodechallenge.ItemListFragment"
-                                           android:layout_width="match_parent"
-                                           android:layout_height="match_parent"
-                                           android:layout_marginLeft="16dp"
-                                           android:layout_marginRight="16dp"
-                                           app:layoutManager="LinearLayoutManager"
-                                           tools:context=".view.ui.ItunesListActivity"
-                                           tools:listitem="@layout/item_row_content"/>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <TextView
+            android:id="@+id/txtPreviousVisited"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/last_visited"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView xmlns:tools="http://schemas.android.com/tools"
+                                               app:layout_constraintTop_toBottomOf="@id/txtPreviousVisited"
+                                               android:id="@+id/rcvItunesList"
+                                               android:name="com.germanmontejo.appetisercodechallenge.ItemListFragment"
+                                               android:layout_width="match_parent"
+                                               android:layout_marginTop="30dp"
+
+                                               android:layout_height="match_parent"
+                                               android:layout_marginLeft="16dp"
+                                               android:layout_marginRight="16dp"
+                                               app:layoutManager="LinearLayoutManager"
+                                               tools:context=".view.ui.ItunesListActivity"
+                                               tools:listitem="@layout/item_row_content"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

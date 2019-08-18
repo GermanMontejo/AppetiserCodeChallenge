@@ -1,6 +1,5 @@
 package com.germanmontejo.appetisercodechallenge.view.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -40,7 +39,7 @@ class ItunesDetailActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        Utils.storeLastActivity(this, Utils.ITUNES_DETAIL_ACTIVITY)
+        Utils.storeStringPref(this, Utils.LAST_ACTIVITY, Utils.ITUNES_DETAIL_ACTIVITY)
     }
 
     override fun onBackPressed() {
@@ -48,13 +47,13 @@ class ItunesDetailActivity : AppCompatActivity() {
         // this ensures that when the user presses the back button
         // we won't be automatically redirected back to the ItunesDetailActivity
         // since we have the previous logic where we should store the last visited activity
-        Utils.storeLastActivity(this, Utils.ITUNES_LIST_ACTIVITY)
+        Utils.storeStringPref(this, Utils.LAST_ACTIVITY, Utils.ITUNES_LIST_ACTIVITY)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) =
         when (item.itemId) {
             android.R.id.home -> {
-                Utils.storeLastActivity(this, Utils.ITUNES_LIST_ACTIVITY)
+                Utils.storeStringPref(this, Utils.LAST_ACTIVITY, Utils.ITUNES_LIST_ACTIVITY)
                 onBackPressed()
                 true
             }

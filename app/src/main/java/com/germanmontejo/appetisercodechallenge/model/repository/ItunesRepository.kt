@@ -1,12 +1,10 @@
 package com.germanmontejo.appetisercodechallenge.model.repository
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.germanmontejo.appetisercodechallenge.model.ItunesResponse
 import com.germanmontejo.appetisercodechallenge.model.Result
-import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

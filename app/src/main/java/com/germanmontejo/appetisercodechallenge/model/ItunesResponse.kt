@@ -1,7 +1,5 @@
 package com.germanmontejo.appetisercodechallenge.model
 
-import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 data class ItunesResponse(
@@ -19,4 +17,4 @@ data class Result(
     val artworkUrl100: String,
     val currency: String,
     val longDescription: String
-    )
+)
