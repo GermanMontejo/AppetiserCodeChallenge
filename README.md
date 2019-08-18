@@ -11,6 +11,7 @@ The app uses the following technologies:
 3. Retrofit - for network requests
 4. Room - for persistent data storage (on top of sqlite).
 5. ViewModel - used to manage the UI's data, in a lifecycle-conscious way.
+etc...
 
 MVVM was the chosen architectural style of designing the whole app due to one main reason:
 To achieve a cleared separation of UI and application logic without introducing complexity and boilerplate code.
