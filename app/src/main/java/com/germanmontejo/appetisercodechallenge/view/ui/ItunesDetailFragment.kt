@@ -40,7 +40,6 @@ class ItunesDetailFragment : Fragment() {
                 trackId = bundle?.getInt(TRACK_ID, 0) ?: 0
 
                 artwork = bundle?.getString(ARTWORK, "") ?: ""
-                imgArtwork = activity?.findViewById(R.id.imvArtworkIcon)!!
 
                 activity?.toolbar_layout?.setExpandedTitleTextAppearance(R.style.ExpandedAppBar)
                 activity?.toolbar_layout?.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar)
@@ -84,10 +83,9 @@ class ItunesDetailFragment : Fragment() {
         rootView.txtTrackPrice.text = trackPrice
         rootView.txtGenre.text = genre
         rootView.txtDescription.text = description
-        Glide.with(this)
-            .load(artwork)
-            .placeholder(R.mipmap.ic_launcher)
-            .into(imgArtwork)
+        if (activity is ItunesDetailActivity) {
+            (activity as ItunesDetailActivity).updateArtwork(artwork)
+        }
         Utils.storeLastTrackViewed(rootView.context, trackId)
     }
 

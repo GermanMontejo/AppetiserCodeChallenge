@@ -3,6 +3,7 @@ package com.germanmontejo.appetisercodechallenge.view.ui
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.germanmontejo.appetisercodechallenge.R
 import com.germanmontejo.appetisercodechallenge.utils.Utils
 import kotlinx.android.synthetic.main.activity_item_detail.*
@@ -48,6 +49,13 @@ class ItunesDetailActivity : AppCompatActivity() {
         // we won't be automatically redirected back to the ItunesDetailActivity
         // since we have the previous logic where we should store the last visited activity
         Utils.storeStringPref(this, Utils.LAST_ACTIVITY, Utils.ITUNES_LIST_ACTIVITY)
+    }
+
+    fun updateArtwork(artwork: String) {
+        Glide.with(this)
+            .load(artwork)
+            .placeholder(R.mipmap.ic_launcher)
+            .into(imvArtworkIcon)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) =
