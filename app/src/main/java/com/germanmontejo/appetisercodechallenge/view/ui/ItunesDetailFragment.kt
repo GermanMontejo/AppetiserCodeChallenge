@@ -8,8 +8,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import kotlinx.android.synthetic.main.item_detail.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.germanmontejo.appetisercodechallenge.R
+import com.germanmontejo.appetisercodechallenge.utils.Utils
+import com.germanmontejo.appetisercodechallenge.viewmodel.ItunesViewModel
 import kotlinx.android.synthetic.main.activity_item_detail.*
 
 /**
@@ -21,40 +25,39 @@ import kotlinx.android.synthetic.main.activity_item_detail.*
 
 class ItunesDetailFragment : Fragment() {
 
-    /**
-     * The dummy content this fragment is presenting.
-     */
-    // private var item: DummyContent.DummyItem? = null
     private lateinit var trackName: String
     private lateinit var trackPrice: String
     private lateinit var genre: String
+    private var trackId: Int = 0
     private lateinit var description: String
     private lateinit var artwork: String
     private lateinit var imgArtwork: ImageView
+    private lateinit var itunesViewModel: ItunesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
-            Log.d("itemlist", "it.containsKey(RESULT_BUNDLE): ${it.containsKey(RESULT_BUNDLE)}")
             if (it.containsKey(RESULT_BUNDLE)) {
-                // Load the dummy content specified by the fragment
-                // arguments. In a real-world scenario, use a Loader
-                // to load content from a content provider.
                 val bundle = it.getBundle(RESULT_BUNDLE)
                 trackName = bundle?.getString(TRACK_NAME, "") ?: ""
                 trackPrice = bundle?.getString(TRACK_PRICE, "") ?: ""
+
                 genre = bundle?.getString(TRACK_GENRE, "") ?: ""
                 description = bundle?.getString(LONG_DESCRIPTION, "") ?: ""
-                Log.d("itemlist", "txtTrackName: $trackPrice")
-                artwork = bundle?.getString(ARTWORK, "") ?: ""
+                trackId = bundle?.getInt(TRACK_ID, 0) ?: 0
 
+                artwork = bundle?.getString(ARTWORK, "") ?: ""
                 imgArtwork = activity?.findViewById(R.id.imvArtworkIcon)!!
-                activity?.toolbar_layout?.title = trackName
+
                 activity?.toolbar_layout?.setExpandedTitleTextAppearance(R.style.ExpandedAppBar)
                 activity?.toolbar_layout?.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar)
+                activity?.toolbar_layout?.title = trackName
             }
         }
+
+        itunesViewModel = ViewModelProviders.of(this).get(ItunesViewModel::class.java)
+        itunesViewModel.initItunesRepo(activity!!.application)
     }
 
     override fun onCreateView(
@@ -62,6 +65,29 @@ class ItunesDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.item_detail, container, false)
+        // This means the app loaded the last viewed track details screen.
+        if (trackName.isEmpty()) {
+            // We're going to retrieve the last viewed track details from the local db
+            // since we can't rely on the bundle would have been cleared by now if the app
+            // has been force closed.
+            val trackId = Utils.getLastTrackViewed(rootView.context)
+            itunesViewModel.getItunesTrackById(trackId).observe(this, Observer { itunesTrack ->
+                trackName = itunesTrack.trackName
+                trackPrice = "${itunesTrack.currency} ${itunesTrack.trackPrice}"
+                genre = itunesTrack.genre
+                description = itunesTrack.description
+                artwork = itunesTrack.artworkUrl
+                populateViewWithTrackData(rootView)
+                activity?.toolbar_layout?.title = trackName
+            })
+        } else {
+            populateViewWithTrackData(rootView)
+        }
+
+        return rootView
+    }
+
+    fun populateViewWithTrackData(rootView: View) {
         rootView.txtTrackName.text = trackName
         rootView.txtTrackPrice.text = trackPrice
         rootView.txtGenre.text = genre
@@ -70,15 +96,11 @@ class ItunesDetailFragment : Fragment() {
             .load(artwork)
             .placeholder(R.mipmap.ic_launcher)
             .into(imgArtwork)
-        return rootView
+        Utils.storeLastTrackViewed(rootView.context, trackId)
     }
 
     companion object {
-        /**
-         * The fragment argument representing the item ID that this fragment
-         * represents.
-         */
-        const val ARG_ITEM_ID = "item_id"
+        const val TRACK_ID = "track_id"
         const val RESULT_BUNDLE = "result_bundle"
         const val TRACK_NAME = "track_name"
         const val TRACK_PRICE = "track_price"

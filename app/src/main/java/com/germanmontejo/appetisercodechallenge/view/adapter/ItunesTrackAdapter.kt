@@ -1,11 +1,11 @@
 package com.germanmontejo.appetisercodechallenge.view.adapter
-import ItunesResult
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.germanmontejo.appetisercodechallenge.R
+import com.germanmontejo.appetisercodechallenge.model.Result
 
-class ItunesTrackAdapter(itunesResults: List<ItunesResult>, isTwoPane: Boolean) : RecyclerView.Adapter<ItunesTrackHolder>() {
+class ItunesTrackAdapter(itunesResults: List<Result>, isTwoPane: Boolean) : RecyclerView.Adapter<ItunesTrackHolder>() {
     private var itunes = itunesResults
     private val twoPane = isTwoPane
     private var isSortedAscending = false
@@ -24,7 +24,7 @@ class ItunesTrackAdapter(itunesResults: List<ItunesResult>, isTwoPane: Boolean) 
     }
 
     fun sortResult(): String {
-        var sortedBy = ""
+        var sortedBy: String
 
         if (!isSortedAscending) {
             sortedBy = "ascending"
